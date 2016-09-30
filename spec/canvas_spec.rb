@@ -44,7 +44,6 @@ module Draw
         ----------------------
       EXAMPLE
       )
-
     end
   end
 end

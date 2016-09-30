@@ -1,21 +1,7 @@
 require './lib/grid'
+require './lib/line'
 
 module Draw
-
-  class Point < Struct.new(:x, :y); end
-
-  class Line
-    attr_reader :start, :finish
-
-    def initialize(start:, finish:)
-      @start, @finish = Point.new(*start), Point.new(*finish)
-    end
-
-    def horizontal?
-      start.y == finish.y
-    end
-  end
-
   class Canvas
 
     def initialize(width:, height:, grid: nil)
@@ -40,21 +26,23 @@ module Draw
       Grid.new(width, height)
     end
   end
-end
 
-class SimpleStyle
+  class SimpleStyle
 
-  STYLES = {
-    grid_top: '_',
-    grid_bottom: '-',
-    grid_left_edge: '|',
-    grid_right_edge: "|\n",
-    blank: ' ',
-    line: :x
-  }
+    STYLES = {
+      grid_top: '_',
+      grid_bottom: '-',
+      grid_left_edge: '|',
+      grid_right_edge: "|\n",
+      blank: ' ',
+      line: :x
+    }
 
-  def self.style_for(symbol)
-    STYLES[symbol]
+    def self.style_for(symbol)
+      STYLES[symbol]
+    end
+
   end
 
+  class DrawError < StandardError; end
 end
