@@ -25,14 +25,8 @@ module Draw
 
     def place_line_in_content(line)
       new_content = content.dup
-      if line.horizontal?
-        (line.start.x..line.finish.x).each do |x_coord|
-          new_content[line.start.y][x_coord] = :line
-        end
-      else
-        (line.start.y..line.finish.y).each do |y_coord|
-          new_content[y_coord][line.start.x] = :line
-        end
+      line.each_point do |point|
+        new_content[point.y][point.x] = :line
       end
       new_content
     end

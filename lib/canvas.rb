@@ -1,3 +1,4 @@
+require './lib/errors'
 require './lib/grid'
 require './lib/line'
 
@@ -43,6 +44,4 @@ module Draw
     end
 
   end
-
-  class DrawError < StandardError; end
 end
