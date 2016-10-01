@@ -19,12 +19,16 @@ module Draw
       Grid.new(width, height, place_line_in_content(line))
     end
 
+    def cell(x, y)
+      content[y][x]
+    end
+
     private
 
     attr_reader :styles, :width, :height, :content
 
     def place_line_in_content(line)
-      new_content = content.dup
+      new_content = content.dup.map(&:dup)
       line.each_point do |point|
         raise OutOfBoundsError if off_grid?(point)
         new_content[point.y][point.x] = :line
@@ -33,7 +37,7 @@ module Draw
     end
 
     def off_grid?(point)
-      point.x > width || point.y > height
+      point.x >= width || point.y >= height
     end
 
     def grid_top

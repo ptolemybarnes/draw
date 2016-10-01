@@ -2,6 +2,10 @@ require './lib/errors'
 require './lib/grid'
 require './lib/line'
 
+def render canvas
+  puts canvas.render
+end
+
 module Draw
   class Canvas
 
@@ -16,12 +20,21 @@ module Draw
     end
 
     def draw_line(start:, finish:)
-      @grid = grid.place(Line.new(start: start, finish: finish))
+      current_grid = grid
+      self.grid = grid.place(Line.new(start: start, finish: finish))
+    rescue OutOfBoundsError => e
+      self.grid = current_grid
+      raise e
+    end
+
+    def cell(x, y)
+      grid.cell(x, y)
     end
 
     private
 
-    attr_reader :width, :height, :styles, :grid
+    attr_reader :width, :height, :styles
+    attr_accessor :grid
 
     def create_blank_grid
       Grid.new(width, height)
