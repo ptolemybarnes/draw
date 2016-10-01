@@ -45,5 +45,16 @@ module Draw
       EXAMPLE
       )
     end
+
+    describe 'bad drawings' do
+
+      it "doesn't allow lines that run off the canvas" do
+        canvas_width = 20
+        canvas = Canvas.new(width: canvas_width, height: 4)
+        expect do
+          canvas.draw_line(start: [2, 0], finish: [canvas_width + 1, 0])
+        end.to raise_error(OutOfBoundsError)
+      end
+    end
   end
 end
