@@ -18,36 +18,55 @@ module Draw
       )
     end
 
-    it 'prints a canvas with a horizontal line on it' do
-      canvas = Canvas.new(width: 20, height: 4)
-      canvas.draw_line(start: [0, 1], finish: [5, 1])
-      expect(canvas.render).to eq(<<~EXAMPLE
-        ______________________
-        |                    |
-        |xxxxxx              |
-        |                    |
-        |                    |
-        ----------------------
-      EXAMPLE
-      )
+    describe 'drawing lines' do
+      it 'prints a canvas with a horizontal line on it' do
+        canvas = Canvas.new(width: 20, height: 4)
+        canvas.draw_line(start: [0, 1], finish: [5, 1])
+        expect(canvas.render).to eq(<<~EXAMPLE
+          ______________________
+          |                    |
+          |xxxxxx              |
+          |                    |
+          |                    |
+          ----------------------
+        EXAMPLE
+        )
+      end
+
+      it 'prints a canvas with a vertical line on it' do
+        canvas = Canvas.new(width: 20, height: 4)
+        canvas.draw_line(start: [2, 0], finish: [2, 2])
+        expect(canvas.render).to eq(<<~EXAMPLE
+          ______________________
+          |  x                 |
+          |  x                 |
+          |  x                 |
+          |                    |
+          ----------------------
+        EXAMPLE
+        )
+      end
     end
 
-    it 'prints a canvas with a vertical line on it' do
-      canvas = Canvas.new(width: 20, height: 4)
-      canvas.draw_line(start: [2, 0], finish: [2, 2])
-      expect(canvas.render).to eq(<<~EXAMPLE
-        ______________________
-        |  x                 |
-        |  x                 |
-        |  x                 |
-        |                    |
-        ----------------------
-      EXAMPLE
-      )
+    describe 'drawing rectangles' do
+
+      specify 'a rectangle can be drawn on the canvas' do
+        canvas = Canvas.new(width: 20, height: 4)
+
+        canvas.draw_rectangle(from: [15, 0], to: [19, 2])
+        expect(canvas.render).to eq(<<~EXAMPLE
+          ______________________
+          |               xxxxx|
+          |               x   x|
+          |               xxxxx|
+          |                    |
+          ----------------------
+        EXAMPLE
+        )
+      end
     end
 
     describe 'bad drawings' do
-
       it "doesn't allow lines that run off the canvas" do
         canvas_width = 20
         canvas = Canvas.new(width: canvas_width, height: 4)

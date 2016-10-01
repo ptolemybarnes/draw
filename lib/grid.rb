@@ -30,7 +30,7 @@ module Draw
     def place_line_in_content(line)
       new_content = content.dup.map(&:dup)
       line.each_point do |point|
-        raise OutOfBoundsError if off_grid?(point)
+        raise OutOfBoundsError.new(point) if off_grid?(point)
         new_content[point.y][point.x] = :line
       end
       new_content

@@ -1,6 +1,7 @@
 require './lib/errors'
 require './lib/grid'
 require './lib/line'
+require './lib/rectangle'
 
 def render canvas
   puts canvas.render
@@ -22,6 +23,14 @@ module Draw
     def draw_line(start:, finish:)
       current_grid = grid
       self.grid = grid.place(Line.new(start: start, finish: finish))
+    rescue OutOfBoundsError => e
+      self.grid = current_grid
+      raise e
+    end
+
+    def draw_rectangle(from:, to:)
+      current_grid = grid
+      self.grid = grid.place(Rectangle.new(from, to))
     rescue OutOfBoundsError => e
       self.grid = current_grid
       raise e
