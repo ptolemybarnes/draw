@@ -15,8 +15,8 @@ module Draw
       end.join + grid_bottom
     end
 
-    def place(line)
-      Grid.new(width, height, place_line_in_content(line))
+    def new_with(shape)
+      Grid.new(width, height, new_content_with(shape))
     end
 
     def cell(x, y)
@@ -27,9 +27,9 @@ module Draw
 
     attr_reader :styles, :width, :height, :content
 
-    def place_line_in_content(line)
+    def new_content_with(shape)
       new_content = content.dup.map(&:dup)
-      line.each_point do |point|
+      shape.each_point do |point|
         raise OutOfBoundsError.new(point) if off_grid?(point)
         new_content[point.y][point.x] = :line
       end
@@ -41,15 +41,19 @@ module Draw
     end
 
     def grid_top
-      (styles.style_for(:grid_top) * (width + 2)) + "\n"
+      (styles.style_for(:grid_top) * (width + 2)) + new_line
     end
 
     def grid_bottom
-      styles.style_for(:grid_bottom) * (width + 2) + "\n"
+      styles.style_for(:grid_bottom) * (width + 2) + new_line
     end
 
     def grid_middle
       styles.style_for(:grid_left_edge) + (styles.style_for(:empty) * width) + styles.style_for(:grid_right_edge)
+    end
+
+    def new_line
+      styles.style_for(:new_line)
     end
 
     def create_blank_grid(width, height)

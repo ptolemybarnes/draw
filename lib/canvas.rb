@@ -2,6 +2,7 @@ require './lib/errors'
 require './lib/grid'
 require './lib/line'
 require './lib/rectangle'
+require './lib/styles'
 
 def render canvas
   puts canvas.render
@@ -21,19 +22,11 @@ module Draw
     end
 
     def draw_line(start:, finish:)
-      current_grid = grid
-      self.grid = grid.place(Line.new(start: start, finish: finish))
-    rescue OutOfBoundsError => e
-      self.grid = current_grid
-      raise e
+      draw(Line.new(start: start, finish: finish))
     end
 
     def draw_rectangle(from:, to:)
-      current_grid = grid
-      self.grid = grid.place(Rectangle.new(from, to))
-    rescue OutOfBoundsError => e
-      self.grid = current_grid
-      raise e
+      draw(Rectangle.new(from, to))
     end
 
     def cell(x, y)
@@ -45,25 +38,16 @@ module Draw
     attr_reader :width, :height, :styles
     attr_accessor :grid
 
+    def draw(shape)
+      current_grid = grid
+      self.grid = grid.new_with(shape)
+    rescue OutOfBoundsError => e
+      self.grid = current_grid
+      raise e
+    end
+
     def create_blank_grid
       Grid.new(width, height)
     end
-  end
-
-  class SimpleStyle
-
-    STYLES = {
-      grid_top: '_',
-      grid_bottom: '-',
-      grid_left_edge: '|',
-      grid_right_edge: "|\n",
-      blank: ' ',
-      line: :x
-    }
-
-    def self.style_for(symbol)
-      STYLES[symbol]
-    end
-
   end
 end
