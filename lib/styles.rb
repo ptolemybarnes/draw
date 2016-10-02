@@ -5,9 +5,10 @@ module Draw
       grid_bottom: '-',
       grid_left_edge: '|',
       grid_right_edge: "|\n",
-      blank: ' ',
       line: :x,
-      new_line: "\n"
+      new_line: "\n",
+      c: 'c',
+      blank: ' '
     }
 
     def self.style_for(symbol)

@@ -2,31 +2,31 @@ require './lib/errors'
 require './lib/grid'
 require './lib/line'
 require './lib/rectangle'
+require './lib/fill'
 require './lib/styles'
-
-def render canvas
-  puts canvas.render
-end
 
 module Draw
   class Canvas
 
     def initialize(width:, height:, grid: nil)
-      @width, @height = width, height
       @styles = SimpleStyle
-      @grid   = grid || create_blank_grid
+      @grid   = grid || create_blank_grid(width, height)
     end
 
     def render
       grid.render
     end
 
-    def draw_line(start:, finish:)
-      draw(Line.new(start: start, finish: finish))
+    def draw_line(from:, to:)
+      draw(Line.new(start: from, finish: to))
     end
 
     def draw_rectangle(from:, to:)
       draw(Rectangle.new(from, to))
+    end
+
+    def fill(x, y, fill_style)
+      draw(Fill.new(x, y, fill_style))
     end
 
     def cell(x, y)
@@ -35,18 +35,19 @@ module Draw
 
     private
 
-    attr_reader :width, :height, :styles
+    attr_reader :styles
     attr_accessor :grid
 
     def draw(shape)
       current_grid = grid
       self.grid = grid.new_with(shape)
+      self
     rescue OutOfBoundsError => e
       self.grid = current_grid
       raise e
     end
 
-    def create_blank_grid
+    def create_blank_grid(width, height)
       Grid.new(width, height)
     end
   end

@@ -23,6 +23,10 @@ module Draw
       end
     end
 
+    def fill_content
+      :line
+    end
+
     private
 
     attr_reader :top_left, :bottom_right

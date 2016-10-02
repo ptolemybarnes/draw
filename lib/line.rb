@@ -31,6 +31,10 @@ module Draw
       end
     end
 
+    def fill_content
+      :line
+    end
+
     class InvalidLineError < DrawError; end
   end
 end
