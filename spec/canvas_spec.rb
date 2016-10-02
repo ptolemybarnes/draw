@@ -68,7 +68,7 @@ module Draw
 
     describe 'filling' do
 
-      xit 'fills an area around a rectangle' do
+      it 'fills an area around a rectangle' do
         canvas = Canvas.new(width: 6, height: 4)
 
         canvas.draw_rectangle(from: [1, 1], to: [4, 2])

@@ -23,21 +23,34 @@ module Draw
       content[y][x]
     end
 
+    def points_around(point)
+      [
+        Point.new(point.x + 1, point.y),
+        Point.new(point.x - 1, point.y),
+        Point.new(point.x,     point.y + 1),
+        Point.new(point.x,     point.y - 1)
+      ].reject {|point| off_grid?(point) || !empty?(point) }
+    end
+
     private
 
     attr_reader :styles, :width, :height, :content
 
     def new_content_with(shape)
       new_content = content.dup.map(&:dup)
-      shape.each_point do |point|
+      shape.each_point(self) do |point|
         raise OutOfBoundsError.new(point) if off_grid?(point)
-        new_content[point.y][point.x] = :line
+        new_content[point.y][point.x] = shape.fill_content
       end
       new_content
     end
 
     def off_grid?(point)
-      point.x >= width || point.y >= height
+      point.x < 0 || point.y < 0 || point.x >= width || point.y >= height
+    end
+
+    def empty?(point)
+      cell(point.x, point.y) == :blank
     end
 
     def grid_top

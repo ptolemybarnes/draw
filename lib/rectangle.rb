@@ -5,7 +5,7 @@ module Draw
       @top_left, @bottom_right = Point.new(*top_left), Point.new(*bottom_right)
     end
 
-    def each_point &block
+    def each_point grid, &block
       # top edge
       (top_left.x..bottom_right.x).each do |x_coord|
         block.call(Point.new(x_coord, top_left.y))

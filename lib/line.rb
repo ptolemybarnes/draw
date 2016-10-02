@@ -19,7 +19,7 @@ module Draw
       start.x == finish.x
     end
 
-    def each_point &block
+    def each_point grid, &block
       if horizontal?
         (start.x..finish.x).each do |x_coord|
           block.call(Point.new(x_coord, start.y))
