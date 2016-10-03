@@ -1,9 +1,11 @@
 require './lib/errors'
+require './lib/point'
 require './lib/grid'
 require './lib/line'
 require './lib/rectangle'
 require './lib/fill'
 require './lib/styles'
+require './lib/print_grid'
 
 module Draw
   class Canvas

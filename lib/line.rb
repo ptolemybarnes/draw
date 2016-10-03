@@ -1,8 +1,6 @@
 require './lib/errors'
 
 module Draw
-  class Point < Struct.new(:x, :y); end
-
   class Line
     attr_reader :start, :finish
 
