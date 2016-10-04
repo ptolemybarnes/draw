@@ -31,10 +31,6 @@ module Draw
       draw(Fill.new(x, y, fill_style))
     end
 
-    def cell(x, y)
-      grid.cell(x, y)
-    end
-
     private
 
     attr_reader :styles

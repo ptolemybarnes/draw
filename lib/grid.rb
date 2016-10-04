@@ -16,10 +16,6 @@ module Draw
       Grid.new(width, height, new_content_with(shape))
     end
 
-    def cell(x, y)
-      content[y][x]
-    end
-
     def points_around(point)
       point.points_around.reject {|point| point.off?(self) || !empty?(point) }
     end
@@ -37,7 +33,7 @@ module Draw
     end
 
     def empty?(point)
-      cell(point.x, point.y).empty_cell?
+      point.find_on(content) == :blank
     end
 
     def create_blank_grid(width, height)

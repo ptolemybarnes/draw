@@ -94,8 +94,6 @@ module Draw
         expect do
           canvas.draw_line(from: [2, 0], to: [canvas_width + 1, 0])
         end.to raise_error(OutOfBoundsError)
-
-        expect(canvas.cell(2, 0)).to eq :blank
       end
     end
   end

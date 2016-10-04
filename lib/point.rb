@@ -18,6 +18,10 @@ module Draw
       x < 0 || y < 0 || x >= grid.width || y >= grid.height
     end
 
+    def find_on(content)
+      content[y][x]
+    end
+
     private
 
     def north
