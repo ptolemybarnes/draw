@@ -13,6 +13,7 @@ module Draw
       grid.points_around(initial_point)
         .reject {|point| visited_points.include? point }
         .each   {|point| each_point(grid, point, visited_points, &block) }
+      grid
     end
   end
 end

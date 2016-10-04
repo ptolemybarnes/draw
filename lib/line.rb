@@ -5,27 +5,13 @@ module Draw
     attr_reader :start, :finish
 
     def initialize(start:, finish:)
-      @start, @finish = Point.new(*start), Point.new(*finish)
-      raise InvalidLineError unless horizontal? || vertical?
+      @start, @finish = start, finish
+      raise InvalidLineError unless @start.linear_path_to?(@finish)
     end
 
-    def horizontal?
-      start.y == finish.y
-    end
-
-    def vertical?
-      start.x == finish.x
-    end
-
-    def each_point grid, &block
-      if horizontal?
-        (start.x..finish.x).each do |x_coord|
-          block.call(Point.new(x_coord, start.y))
-        end
-      else
-        (start.y..finish.y).each do |y_coord|
-          block.call(Point.new(start.x, y_coord))
-        end
+    def each_point _, &block
+      start.to(finish).each do |point|
+        block.call(point)
       end
     end
 

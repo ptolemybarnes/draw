@@ -2,25 +2,17 @@ module Draw
   class Rectangle
 
     def initialize(top_left, bottom_right)
-      @top_left, @bottom_right = Point.new(*top_left), Point.new(*bottom_right)
+      @top_left, @bottom_right = top_left, bottom_right
     end
 
-    def each_point grid, &block
-      # top edge
-      (top_left.x..bottom_right.x).each do |x_coord|
-        block.call(Point.new(x_coord, top_left.y))
-      end
-
-      # left edge
-      (top_left.y..bottom_right.y).each {|y_coord| block.call(Point.new(top_left.x, y_coord)) }
-
-      # right edge
-      (top_left.y..bottom_right.y).each {|y_coord| block.call(Point.new(bottom_right.x, y_coord)) }
-
-      # bottom edge
-      (top_left.x..bottom_right.x).each do |x_coord|
-        block.call(Point.new(x_coord, bottom_right.y))
-      end
+    def each_point _, &block
+      [
+        top_left,
+        Point.new(bottom_right.x, top_left.y),
+        bottom_right,
+        Point.new(top_left.x, bottom_right.y),
+        top_left
+      ].each_cons(2) {|start, finish| Line.new(start: start, finish: finish).each_point(_, &block) }
     end
 
     def fill_content

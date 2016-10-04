@@ -17,7 +17,7 @@ module Draw
     end
 
     def points_around(point)
-      point.points_around.reject {|point| point.off?(self) || !empty?(point) }
+      point.points_around.reject {|point| point.off?(width, height) || !point.empty?(content) }
     end
 
     private
@@ -26,14 +26,10 @@ module Draw
     def new_content_with(shape)
       new_content = content.dup.map(&:dup)
       shape.each_point(self) do |point|
-        raise OutOfBoundsError.new(point) if point.off?(self)
-        new_content[point.y][point.x] = shape.fill_content
+        raise OutOfBoundsError.new(point) if point.off?(width, height)
+        point.fill(new_content, shape.fill_content)
       end
-      new_content
-    end
-
-    def empty?(point)
-      point.find_on(content) == :blank
+      new_content.freeze.map(&:freeze)
     end
 
     def create_blank_grid(width, height)

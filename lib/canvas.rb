@@ -6,6 +6,7 @@ require './lib/rectangle'
 require './lib/fill'
 require './lib/styles'
 require './lib/print_grid'
+require './lib/core_ext'
 
 module Draw
   class Canvas
@@ -20,11 +21,11 @@ module Draw
     end
 
     def draw_line(from:, to:)
-      draw(Line.new(start: from, finish: to))
+      draw(Line.new(start: Point.new(*from), finish: Point.new(*to)))
     end
 
     def draw_rectangle(from:, to:)
-      draw(Rectangle.new(from, to))
+      draw(Rectangle.new(Point.new(*from), Point.new(*to)))
     end
 
     def fill(x, y, fill_style)
