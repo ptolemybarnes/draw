@@ -1,16 +1,6 @@
 class Integer
-
-  def step_toward target
-    raise 'Error: Integer#tickto should take Fixnum as an argument' if target.class != Fixnum
-    case self <=> target
-    when 1
-      return self - 1
-    when -1
-      return self + 1
-    when 0
-      return self
-    end
+  def step_toward(target)
+    return self if self == target
+    self < target ? self + 1 : self - 1
   end
-
 end
-

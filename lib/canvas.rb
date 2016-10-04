@@ -9,10 +9,9 @@ require './lib/print_grid'
 require './lib/core_ext'
 
 module Draw
+  # wraps and coordinates classes for showing and drawing on the canvas
   class Canvas
-
     def initialize(width:, height:, grid: nil)
-      @styles = SimpleStyle
       @grid   = grid || create_blank_grid(width, height)
     end
 
@@ -29,13 +28,14 @@ module Draw
     end
 
     def fill(x, y, fill_style)
-      draw(Fill.new(x, y, fill_style))
+      draw(Fill.new(Point.new(x, y), fill_style))
     end
 
-    private
+    protected
 
-    attr_reader :styles
     attr_accessor :grid
+
+    private
 
     def draw(shape)
       current_grid = grid

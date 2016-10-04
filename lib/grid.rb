@@ -1,4 +1,5 @@
 module Draw
+  # represents a 2D grid
   class Grid
     attr_reader :width, :height
 
@@ -16,24 +17,35 @@ module Draw
       Grid.new(width, height, new_content_with(shape))
     end
 
-    def points_around(point)
-      point.points_around.reject {|point| point.off?(width, height) || !point.empty?(content) }
+    def points_around(center_point)
+      center_point.neighbours.reject do |point|
+        off_grid?(point) || !empty_at?(point)
+      end
     end
 
     private
+
     attr_reader :content, :styles
+
+    def empty_at?(point)
+      content[point.y][point.x] == :blank
+    end
+
+    def off_grid?(point)
+      point.x < 0 || point.y < 0 || point.x >= width || point.y >= height
+    end
 
     def new_content_with(shape)
       new_content = content.dup.map(&:dup)
       shape.each_point(self) do |point|
-        raise OutOfBoundsError.new(point) if point.off?(width, height)
-        point.fill(new_content, shape.fill_content)
+        fail(OutOfBoundsError, point) if off_grid?(point)
+        new_content[point.y][point.x] = shape.fill_content
       end
       new_content.freeze.map(&:freeze)
     end
 
     def create_blank_grid(width, height)
-      Array.new(height) { Array.new(width) { :blank }}
+      Array.new(height) { Array.new(width) { :blank } }
     end
   end
 end

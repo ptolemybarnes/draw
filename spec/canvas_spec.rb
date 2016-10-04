@@ -3,7 +3,6 @@ require 'pry'
 
 module Draw
   describe Canvas do
-
     it 'prints an empty canvas' do
       canvas = Canvas.new(width: 20, height: 4)
 
@@ -49,7 +48,6 @@ module Draw
     end
 
     describe 'drawing rectangles' do
-
       specify 'a rectangle can be drawn on the canvas' do
         canvas = Canvas.new(width: 20, height: 4)
 
@@ -67,7 +65,6 @@ module Draw
     end
 
     describe 'filling' do
-
       it 'fills an area around a rectangle' do
         canvas = Canvas.new(width: 6, height: 4)
 

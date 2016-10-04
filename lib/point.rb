@@ -1,4 +1,7 @@
+require './lib/errors'
+
 module Draw
+  # provides access to a grid point & computes points between 2 points
   class Point
     attr_reader :x, :y
 
@@ -6,69 +9,41 @@ module Draw
       @x, @y = x, y
     end
 
-    def points_around
-      [ north, east, south, west ]
+    def neighbours
+      [north, east, south, west]
     end
 
-    def == other
+    def ==(other)
       x == other.x && y == other.y
     end
 
-    def off?(width, height)
-      x < 0 || y < 0 || x >= width || y >= height
-    end
-
-    def find_on(content)
-      content[y][x]
-    end
-
-    def empty?(content)
-      find_on(content) == :blank
-    end
-
-    def fill(content, fill_content)
-      content[y][x] = fill_content
+    def to(other, points = [])
+      fail NonLinearPathError unless linear_path_to?(other)
+      if points.last == other
+        points
+      else
+        step_toward(other).to(other, points << self)
+      end
     end
 
     def linear_path_to?(other)
       y == other.y || x == other.x
     end
 
-    def to(other, range = [])
-      raise unless linear_path_to?(other)
-      if range.last == other
-        range
-      else
-        step_toward(other).to(other, range << self)
-      end
-    end
-
     private
 
     def step_toward(other)
-      if self == other
-        self
-      elsif x == other.x
+      return self if self == other
+      if x == other.x
         Point.new(x, y.step_toward(other.y))
       else
         Point.new(x.step_toward(other.x), y)
       end
     end
 
-    def north
-      Point.new(x, y + 1)
-    end
-
-    def east
-      Point.new(x + 1, y)
-    end
-
-    def south
-      Point.new(x, y + 1)
-    end
-
-    def west
-      Point.new(x - 1, y)
-    end
+    def north; Point.new(x, y + 1); end
+    def east;  Point.new(x + 1, y); end
+    def south; Point.new(x, y + 1); end
+    def west;  Point.new(x - 1, y); end
   end
 end

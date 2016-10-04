@@ -1,4 +1,5 @@
 module Draw
+  # contains the characters for printing a grid
   class SimpleStyle
     STYLES = {
       grid_top: '_',
