@@ -5,12 +5,12 @@ module Draw
       new(*args).call
     end
 
-    def initialize(content, styles)
-      @content, @styles  = content, styles
+    def initialize(grid, styles)
+      @grid, @styles  = grid, styles
     end
 
     def call
-      grid_top + content.map do |row|
+      grid_top + grid.map do |row|
         styles.style_for(:grid_left_edge) +
           print_row(row) +
           styles.style_for(:grid_right_edge)
@@ -38,13 +38,13 @@ module Draw
     end
 
     def width
-      content.first.length
+      grid.first.length
     end
 
     def print_row(row)
-      row.map { |cell| styles.style_for(cell) }.join
+      row.map { |cell| cell.content }.join
     end
 
-    attr_reader :content, :styles
+    attr_reader :grid, :styles
   end
 end

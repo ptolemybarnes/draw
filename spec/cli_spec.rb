@@ -1,29 +1,29 @@
 require './lib/cli'
-require './lib/canvas'
+require './lib/project'
 
 module Draw
   describe CLI do
 
     subject(:cli) { CLI.new }
-    let(:canvas)  do
-      instance_double(Canvas, draw_line: nil, draw_rectangle: nil, render: nil, fill: nil)
+    let(:project)  do
+      instance_double(Project, draw_line: nil, draw_rectangle: nil, render: nil, fill: nil)
     end
 
     before do
-      allow(Canvas).to receive(:new).and_return(canvas)
+      allow(Project).to receive(:new).and_return(project)
     end
 
-    specify 'creating a canvas' do
+    specify 'creating a project' do
       cli.input('enter command: C 20 4')
 
-      expect(Canvas).to have_received(:new).with(hash_including(width: 20, height: 4))
+      expect(Project).to have_received(:new).with(hash_including(width: 20, height: 4))
     end
 
-    specify 'drawing a line on the canvas' do
+    specify 'drawing a line on the project' do
       cli.input('enter command: C 20 4')
       cli.input('enter command: L 1 2 6 2')
 
-      expect(canvas).to have_received(:draw_line)
+      expect(project).to have_received(:draw_line)
         .with(from: [0, 1], to: [5, 1])
     end
 
@@ -31,7 +31,7 @@ module Draw
       cli.input('enter command: C 20 4')
       cli.input('enter command: B 10 3 o')
 
-      expect(canvas).to have_received(:fill)
+      expect(project).to have_received(:fill)
         .with(9, 2, 'o')
     end
 
@@ -39,7 +39,7 @@ module Draw
       cli.input('enter command: C 20 4')
       cli.input('enter command: R 16 1 20 3')
 
-      expect(canvas).to have_received(:draw_rectangle)
+      expect(project).to have_received(:draw_rectangle)
         .with(from: [15, 0], to: [19, 2])
     end
 
@@ -52,10 +52,10 @@ module Draw
         expect { cli.input('enter command: 1 2 3 4') }.to raise_error(CLI::UnknownCommandError)
       end
 
-      it 'first command must be to draw a canvas' do
+      it 'first command must be to draw a project' do
         expect do
           cli.input('enter command: L 1 2 6 2')
-        end.to raise_error(CLI::NoCanvasError)
+        end.to raise_error(CLI::NoProjectError)
       end
     end
   end

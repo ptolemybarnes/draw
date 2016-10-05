@@ -1,13 +1,15 @@
 module Draw
-  # describes the points in a rectangle of a given size on the canvas
+  # describes the points in a rectangle of a given size on the project
   class Rectangle
-    def initialize(top_left, bottom_right)
-      @top_left, @bottom_right = top_left, bottom_right
+    attr_reader :content
+
+    def initialize(top_left, bottom_right, content)
+      @top_left, @bottom_right, @content = top_left, bottom_right, content
     end
 
     def each_point(grid, &block)
       corners.each_cons(2) do |start, finish|
-        Line.new(start: start, finish: finish).each_point(grid, &block)
+        Line.new(start: start, finish: finish, content: content).each_point(grid, &block)
       end
     end
 
@@ -21,8 +23,8 @@ module Draw
       ]
     end
 
-    def fill_content
-      :line
+    def blank?
+      false
     end
 
     private

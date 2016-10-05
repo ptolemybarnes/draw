@@ -9,8 +9,8 @@ require './lib/print_grid'
 require './lib/core_ext'
 
 module Draw
-  # wraps and coordinates classes for showing and drawing on the canvas
-  class Canvas
+  # wraps and coordinates classes for showing and working on the project
+  class Project
     def initialize(width:, height:, grid: nil)
       @grid   = grid || create_blank_grid(width, height)
     end
@@ -20,11 +20,11 @@ module Draw
     end
 
     def draw_line(from:, to:)
-      draw(Line.new(start: Point.new(*from), finish: Point.new(*to)))
+      draw(Line.new(start: Point.new(*from), finish: Point.new(*to), content: :x))
     end
 
     def draw_rectangle(from:, to:)
-      draw(Rectangle.new(Point.new(*from), Point.new(*to)))
+      draw(Rectangle.new(Point.new(*from), Point.new(*to), :x))
     end
 
     def fill(x, y, fill_style)

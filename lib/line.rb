@@ -3,10 +3,10 @@ require './lib/errors'
 module Draw
   # describes a line on the grid
   class Line
-    attr_reader :start, :finish
+    attr_reader :start, :finish, :content
 
-    def initialize(start:, finish:)
-      @start, @finish = start, finish
+    def initialize(start:, finish:, content:)
+      @start, @finish, @content = start, finish, content
       fail InvalidLineError unless @start.linear_path_to?(@finish)
     end
 
@@ -14,10 +14,6 @@ module Draw
       start.to(finish).each do |point|
         block.call(point)
       end
-    end
-
-    def fill_content
-      :line
     end
 
     class InvalidLineError < DrawError; end

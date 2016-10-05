@@ -1,11 +1,11 @@
 module Draw
   # calculates which points on a grid to fill from a given initial point
   class Fill
-    attr_reader :fill_content, :start_point
+    attr_reader :content, :start_point
 
-    def initialize(start, fill_content)
+    def initialize(start, content)
       @start_point  = start
-      @fill_content = fill_content
+      @content = content
     end
 
     def each_point(grid, initial_point = start_point, visited = [], &block)
