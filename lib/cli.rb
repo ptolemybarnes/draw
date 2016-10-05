@@ -1,24 +1,79 @@
 module Draw
+  # translates user-input to commands that Canvas understands
   class CLI
     class CLIError < StandardError; end
     class NoPrefixError < CLIError; end
     class UnknownCommandError < CLIError; end
     class NoCanvasError < CLIError; end
 
-    COMMAND_PREFIX = 'enter command:'
-    attr_reader :canvas
+    module Commands
+      PREFIX           = 'enter command:'
+      DRAW_CANVAS    = 'C'
+      DRAW_LINE      = 'L'
+      DRAW_RECTANGLE = 'R'
+      DRAW_FILL      = 'B'
+    end
 
     SHAPE_COMMANDS = {
-      'C' => :canvas,
-      'L' => :line,
-      'R' => :rectangle,
-      'B' => :fill
+      Commands::DRAW_CANVAS    => :canvas,
+      Commands::DRAW_LINE      => :line,
+      Commands::DRAW_RECTANGLE => :rectangle,
+      Commands::DRAW_FILL      => :fill
     }
 
     def input(command)
       execute(parse(command))
     end
 
+    private
+
+    attr_reader :canvas
+
+    def parse(command)
+      fail NoPrefixError unless command.slice!(Commands::PREFIX)
+      tokens = command.lstrip.split.map { |arg| Token.new(arg) }
+      fail UnknownCommandError unless tokens.first.shape_command?
+      fail NoCanvasError unless canvas ||
+                                tokens.first.value == Commands::DRAW_CANVAS
+      tokens
+    end
+
+    def execute(tokens)
+      send('draw_' + SHAPE_COMMANDS[tokens.first.value].to_s, *tokens[1..-1])
+      canvas.render
+    end
+
+    def draw_canvas(width, height)
+      @canvas = Canvas.new(width: width.value, height: height.value)
+    end
+
+    def draw_line(*args)
+      canvas.draw_line(
+        from: args[0..1].map { |token| to_zero_index(token.value) },
+        to:   args[2..3].map { |token| to_zero_index(token.value) }
+      )
+    end
+
+    def draw_fill(x, y, fill_content)
+      canvas.fill(
+        to_zero_index(x.value.to_i), to_zero_index(y.value.to_i),
+        fill_content.value
+      )
+    end
+
+    def draw_rectangle(*args)
+      canvas.draw_rectangle(
+        from: args[0..1].map { |token| to_zero_index(token.value) },
+        to:   args[2..3].map { |token| to_zero_index(token.value) }
+      )
+    end
+
+    # as we use a zero-indexed array internally.
+    def to_zero_index(integer)
+      integer - 1
+    end
+
+    # represents a token of input from the user
     class Token
       def initialize(value)
         @value = value
@@ -38,36 +93,6 @@ module Draw
       def integer?(value)
         value.to_i.to_s == value.to_s
       end
-    end
-
-    private
-    attr_reader :canvas
-
-    def parse(command)
-      raise NoPrefixError unless command.slice!(COMMAND_PREFIX)
-      tokens = command.lstrip.split.map {|arg| Token.new(arg) }
-      raise UnknownCommandError unless tokens.first.shape_command?
-      raise NoCanvasError unless canvas || tokens.first.value == 'C'
-      tokens
-    end
-
-    def execute(tokens)
-      send('create_' + SHAPE_COMMANDS[tokens.first.value].to_s, *tokens[1..-1])
-    end
-
-    def create_canvas(width, height)
-      @canvas = Canvas.new(width: width.value, height: height.value)
-    end
-
-    def create_line(*args)
-      canvas.draw_line(
-        from: Point.new(*args[0..1].map {|token| token.value - 1 }),
-        to:   Point.new(*args[2..3].map {|token| token.value - 1 })
-      )
-    end
-
-    def create_fill(x, y, fill_content)
-      canvas.fill(x.value.to_i - 1, y.value.to_i - 1, fill_content.value)
     end
   end
 end
