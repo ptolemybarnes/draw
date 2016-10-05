@@ -3,13 +3,13 @@ module Draw
   class Rectangle
     attr_reader :content
 
-    def initialize(top_left, bottom_right, content)
-      @top_left, @bottom_right, @content = top_left, bottom_right, content
+    def initialize(from:, to:, content:)
+      @top_left, @bottom_right, @content = from, to, content
     end
 
-    def each_point(grid, &block)
+    def each_point(canvas, &block)
       corners.each_cons(2) do |start, finish|
-        Line.new(start: start, finish: finish, content: content).each_point(grid, &block)
+        Line.new(start: start, finish: finish, content: content).each_point(canvas, &block)
       end
     end
 

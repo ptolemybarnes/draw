@@ -1,22 +1,22 @@
 require './lib/errors'
 require './lib/point'
-require './lib/grid'
+require './lib/canvas'
 require './lib/line'
 require './lib/rectangle'
 require './lib/fill'
 require './lib/styles'
-require './lib/print_grid'
+require './lib/print_canvas'
 require './lib/core_ext'
 
 module Draw
   # wraps and coordinates classes for showing and working on the project
   class Project
-    def initialize(width:, height:, grid: nil)
-      @grid   = grid || create_blank_grid(width, height)
+    def initialize(width:, height:)
+      @canvas = create_blank_canvas(width, height)
     end
 
     def render
-      grid.render
+      canvas.render_with(SimpleStyle)
     end
 
     def draw_line(from:, to:)
@@ -24,7 +24,7 @@ module Draw
     end
 
     def draw_rectangle(from:, to:)
-      draw(Rectangle.new(Point.new(*from), Point.new(*to), :x))
+      draw(Rectangle.new(from: Point.new(*from), to: Point.new(*to), content: :x))
     end
 
     def fill(x, y, fill_style)
@@ -33,21 +33,21 @@ module Draw
 
     protected
 
-    attr_accessor :grid
+    attr_accessor :canvas
 
     private
 
     def draw(shape)
-      current_grid = grid
-      self.grid = grid.new_with(shape)
+      current_canvas = canvas
+      self.canvas = canvas.new_with(shape)
       self
     rescue OutOfBoundsError => e
-      self.grid = current_grid
+      self.canvas = current_canvas
       raise e
     end
 
-    def create_blank_grid(width, height)
-      Grid.new(width, height)
+    def create_blank_canvas(width, height)
+      Canvas.new(width, height)
     end
   end
 end

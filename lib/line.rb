@@ -1,7 +1,7 @@
 require './lib/errors'
 
 module Draw
-  # describes a line on the grid
+  # describes a line on the canvas
   class Line
     attr_reader :start, :finish, :content
 
@@ -14,6 +14,10 @@ module Draw
       start.to(finish).each do |point|
         block.call(point)
       end
+    end
+
+    def blank?
+      false
     end
 
     class InvalidLineError < DrawError; end

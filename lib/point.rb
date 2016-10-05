@@ -1,7 +1,7 @@
 require './lib/errors'
 
 module Draw
-  # provides access to a grid point & computes points between 2 points
+  # provides access to a canvas point & computes points between 2 points
   class Point
     attr_reader :x, :y
 

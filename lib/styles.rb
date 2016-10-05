@@ -1,11 +1,11 @@
 module Draw
-  # contains the characters for printing a grid
+  # contains the characters for printing a canvas
   class SimpleStyle
     STYLES = {
-      grid_top: '_',
-      grid_bottom: '-',
-      grid_left_edge: '|',
-      grid_right_edge: "|\n",
+      canvas_top: '_',
+      canvas_bottom: '-',
+      canvas_left_edge: '|',
+      canvas_right_edge: "|\n",
       new_line: "\n",
     }
 

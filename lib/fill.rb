@@ -1,5 +1,5 @@
 module Draw
-  # calculates which points on a grid to fill from a given initial point
+  # calculates which points on a canvas to fill from a given initial point
   class Fill
     attr_reader :content, :start_point
 
@@ -8,13 +8,13 @@ module Draw
       @content = content
     end
 
-    def each_point(grid, initial_point = start_point, visited = [], &block)
+    def each_point(canvas, initial_point = start_point, visited = [], &block)
       block.call(initial_point)
       visited << initial_point
-      grid.points_around(initial_point)
+      canvas.points_around(initial_point)
         .reject { |point| visited.include? point }
-        .each   { |point| each_point(grid, point, visited, &block) }
-      grid
+        .each   { |point| each_point(canvas, point, visited, &block) }
+      canvas
     end
   end
 end
