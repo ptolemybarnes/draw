@@ -12,7 +12,7 @@ module Draw
       DRAW_LINE        = 'L'
       DRAW_RECTANGLE   = 'R'
       DRAW_FILL        = 'B'
-      EXIT             = 'Q'
+      EXIT             =  PREFIX + ' Q'
     end
 
     SHAPE_COMMANDS = {
@@ -23,7 +23,7 @@ module Draw
     }
 
     def input(command)
-      return if command == Commands::EXIT
+      return if command.lstrip == Commands::EXIT
       execute(parse(command))
     end
 

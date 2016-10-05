@@ -41,7 +41,7 @@ module Draw
       end
     end
 
-    def north; Point.new(x, y + 1); end
+    def north; Point.new(x, y - 1); end
     def east;  Point.new(x + 1, y); end
     def south; Point.new(x, y + 1); end
     def west;  Point.new(x - 1, y); end
