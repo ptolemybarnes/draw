@@ -3,13 +3,14 @@ require './lib/canvas'
 require './lib/cli'
 
 cli   = Draw::CLI.new
-input = nil
+user_input = nil
 puts
 puts "Welcome to Draw. Please start by creating a canvas."
 puts
-while input != 'exit'
+while user_input != Draw::CLI::Commands::EXIT
   begin
-    puts cli.input(gets.chomp)
+    user_input = gets.chomp
+    puts cli.input(user_input)
   rescue Draw::CLI::NoPrefixError
     puts "Prefix your command with #{Draw::CLI::Commands::PREFIX}\n"
   rescue Draw::CLI::UnknownCommandError

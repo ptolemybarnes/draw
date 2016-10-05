@@ -8,10 +8,11 @@ module Draw
 
     module Commands
       PREFIX           = 'enter command:'
-      DRAW_CANVAS    = 'C'
-      DRAW_LINE      = 'L'
-      DRAW_RECTANGLE = 'R'
-      DRAW_FILL      = 'B'
+      DRAW_CANVAS      = 'C'
+      DRAW_LINE        = 'L'
+      DRAW_RECTANGLE   = 'R'
+      DRAW_FILL        = 'B'
+      EXIT             = 'Q'
     end
 
     SHAPE_COMMANDS = {
@@ -22,6 +23,7 @@ module Draw
     }
 
     def input(command)
+      return if command == Commands::EXIT
       execute(parse(command))
     end
 
