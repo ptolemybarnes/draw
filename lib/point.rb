@@ -17,12 +17,12 @@ module Draw
       x == other.x && y == other.y
     end
 
-    def to(other, points = [])
+    def to(other)
       fail NonLinearPathError unless linear_path_to?(other)
-      if points.last == other
-        points
+      if y == other.y
+        Range.new(*[x, other.x].sort).map {|new_x| Point.new(new_x, y) }
       else
-        step_toward(other).to(other, points << self)
+        Range.new(*[y, other.y].sort).map {|new_y| Point.new(x, new_y) }
       end
     end
 
@@ -31,15 +31,6 @@ module Draw
     end
 
     private
-
-    def step_toward(other)
-      return self if self == other
-      if x == other.x
-        Point.new(x, y.step_toward(other.y))
-      else
-        Point.new(x.step_toward(other.x), y)
-      end
-    end
 
     def north; Point.new(x, y - 1); end
     def east;  Point.new(x + 1, y); end
