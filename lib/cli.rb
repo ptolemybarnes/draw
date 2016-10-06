@@ -75,7 +75,7 @@ module Draw
       integer - 1
     end
 
-    # represents a token of input from the user
+    # represents a token of input from the user (incomplete)
     class Token
       def initialize(value)
         @value = value

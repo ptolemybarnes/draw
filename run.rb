@@ -1,4 +1,3 @@
-require 'pry'
 require './lib/project'
 require './lib/cli'
 
@@ -11,10 +10,12 @@ while user_input != Draw::CLI::Commands::EXIT
   begin
     user_input = gets.chomp
     puts cli.input(user_input)
- rescue Draw::CLI::NoPrefixError
+  rescue Draw::CLI::NoPrefixError
     puts "Prefix your command with #{Draw::CLI::Commands::PREFIX}\n"
   rescue Draw::CLI::UnknownCommandError
     puts "Command must be one of #{Draw::CLI::SHAPE_COMMANDS.keys.join(', ')}\n"
+  rescue => e
+    puts "Draw exploded for the following reason: #{e}"
   end
 end
 puts
