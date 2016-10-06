@@ -69,7 +69,7 @@ module Draw
         project = Project.new(width: 6, height: 4)
 
         project.draw_rectangle(from: [1, 1], to: [4, 2])
-        project.fill(0, 0, :c)
+        project.fill(0, 0, 'c')
 
         expect(project.render).to eq(<<~EXAMPLE
           ________

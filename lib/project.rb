@@ -19,11 +19,11 @@ module Draw
     end
 
     def draw_line(from:, to:)
-      draw(Line.new(start: Point.new(*from), finish: Point.new(*to), content: :x))
+      draw(Line.new(start: Point.new(*from), finish: Point.new(*to), content: 'x'))
     end
 
     def draw_rectangle(from:, to:)
-      draw(Rectangle.new(from: Point.new(*from), to: Point.new(*to), content: :x))
+      draw(Rectangle.new(from: Point.new(*from), to: Point.new(*to), content: 'x'))
     end
 
     def fill(x, y, fill_style)

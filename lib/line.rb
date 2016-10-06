@@ -3,7 +3,6 @@ require './lib/errors'
 module Draw
   # describes a line on the canvas
   class Line
-    attr_reader :start, :finish, :content
 
     def initialize(start:, finish:, content:)
       @start, @finish, @content = start, finish, content
@@ -19,6 +18,13 @@ module Draw
     def blank?
       false
     end
+
+    def content
+      @content.dup
+    end
+
+    private
+    attr_reader :start, :finish
 
     class InvalidLineError < DrawError; end
   end

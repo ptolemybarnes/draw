@@ -1,7 +1,6 @@
 module Draw
   # calculates which points on a canvas to fill from a given initial point
   class Fill
-    attr_reader :content, :start_point
 
     def initialize(start, content)
       @start_point  = start
@@ -16,5 +15,13 @@ module Draw
         .each   { |point| each_point(canvas, point, visited, &block) }
       canvas
     end
+
+    def content
+      @content.dup
+    end
+
+    private
+
+    attr_reader :start_point
   end
 end

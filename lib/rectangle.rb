@@ -1,7 +1,6 @@
 module Draw
   # describes the points in a rectangle of a given size on the project
   class Rectangle
-    attr_reader :content
 
     def initialize(from:, to:, content:)
       @top_left, @bottom_right, @content = from, to, content
@@ -25,6 +24,10 @@ module Draw
 
     def blank?
       false
+    end
+
+    def content
+      @content.dup
     end
 
     private
