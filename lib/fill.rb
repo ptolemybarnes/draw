@@ -1,7 +1,6 @@
 module Draw
   # calculates which points on a canvas to fill from a given initial point
   class Fill
-
     def initialize(start, content)
       @start_point  = start
       @content = content

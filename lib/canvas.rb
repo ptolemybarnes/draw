@@ -51,11 +51,4 @@ module Draw
       Array.new(height) { Array.new(width) { EmptyShape.new(' ') } }
     end
   end
-
-  class EmptyShape < Struct.new(:content)
-    def blank?
-      true
-    end
-  end
-
 end

@@ -1,7 +1,6 @@
 module Draw
   # describes the points in a rectangle of a given size on the project
   class Rectangle
-
     def initialize(from:, to:, content:)
       @top_left, @bottom_right, @content = from, to, content
     end

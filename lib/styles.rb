@@ -6,7 +6,7 @@ module Draw
       canvas_bottom: '-',
       canvas_left_edge: '|',
       canvas_right_edge: "|\n",
-      new_line: "\n",
+      new_line: "\n"
     }
 
     def self.style_for(symbol)

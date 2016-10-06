@@ -20,9 +20,9 @@ module Draw
     def to(other)
       fail NonLinearPathError unless linear_path_to?(other)
       if y == other.y
-        Range.new(*[x, other.x].sort).map {|new_x| Point.new(new_x, y) }
+        Range.new(*[x, other.x].sort).map { |new_x| Point.new(new_x, y) }
       else
-        Range.new(*[y, other.y].sort).map {|new_y| Point.new(x, new_y) }
+        Range.new(*[y, other.y].sort).map { |new_y| Point.new(x, new_y) }
       end
     end
 
@@ -32,9 +32,20 @@ module Draw
 
     private
 
-    def north; Point.new(x, y - 1); end
-    def east;  Point.new(x + 1, y); end
-    def south; Point.new(x, y + 1); end
-    def west;  Point.new(x - 1, y); end
+    def north
+      Point.new(x, y - 1)
+    end
+
+    def east
+      Point.new(x + 1, y)
+    end
+
+    def south
+      Point.new(x, y + 1)
+    end
+
+    def west
+      Point.new(x - 1, y)
+    end
   end
 end

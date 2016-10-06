@@ -6,6 +6,7 @@ require './lib/rectangle'
 require './lib/fill'
 require './lib/styles'
 require './lib/print_canvas'
+require './lib/empty_shape'
 
 module Draw
   # wraps and coordinates classes for showing and working on the project

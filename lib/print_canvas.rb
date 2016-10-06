@@ -18,6 +18,7 @@ module Draw
     end
 
     private
+
     attr_reader :canvas, :styles
 
     def canvas_top
@@ -43,7 +44,7 @@ module Draw
     end
 
     def print_row(row)
-      row.map { |cell| cell.content }.join
+      row.map(&:content).join
     end
   end
 end

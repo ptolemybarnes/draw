@@ -3,7 +3,6 @@ require './lib/project'
 
 module Draw
   describe CLI do
-
     subject(:cli) { CLI.new }
     let(:project)  do
       instance_double(Project, draw_line: nil, draw_rectangle: nil, render: nil, fill: nil)

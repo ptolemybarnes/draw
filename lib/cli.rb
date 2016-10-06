@@ -36,7 +36,7 @@ module Draw
       tokens = command.lstrip.split.map { |arg| Token.new(arg) }
       fail UnknownCommandError unless tokens.first.shape_command?
       fail NoProjectError unless project ||
-                                tokens.first.value == Commands::DRAW_CANVAS
+                                 tokens.first.value == Commands::DRAW_CANVAS
       tokens
     end
 

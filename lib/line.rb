@@ -3,7 +3,6 @@ require './lib/errors'
 module Draw
   # describes a line on the canvas
   class Line
-
     def initialize(start:, finish:, content:)
       @start, @finish, @content = start, finish, content
       fail InvalidLineError unless @start.linear_path_to?(@finish)
@@ -24,6 +23,7 @@ module Draw
     end
 
     private
+
     attr_reader :start, :finish
 
     class InvalidLineError < DrawError; end
