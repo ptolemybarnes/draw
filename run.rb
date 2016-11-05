@@ -8,10 +8,9 @@ puts 'Welcome to Draw. Please start by creating a project.'
 puts
 while user_input != Draw::CLI::Commands::EXIT
   begin
+    print 'enter command: '
     user_input = gets.chomp
     puts cli.input(user_input)
-  rescue Draw::CLI::NoPrefixError
-    puts "Prefix your command with #{Draw::CLI::Commands::PREFIX}\n"
   rescue Draw::CLI::UnknownCommandError
     puts "Command must be one of #{Draw::CLI::SHAPE_COMMANDS.keys.join(', ')}\n"
   rescue => e

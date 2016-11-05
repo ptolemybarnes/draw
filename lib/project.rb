@@ -31,19 +31,13 @@ module Draw
       draw(Fill.new(Point.new(x, y), fill_style))
     end
 
-    protected
+    private
 
     attr_accessor :canvas
 
-    private
-
     def draw(shape)
-      current_canvas = canvas
       self.canvas = canvas.new_with(shape)
       self
-    rescue OutOfBoundsError => e
-      self.canvas = current_canvas
-      raise e
     end
 
     def create_blank_canvas(width, height)

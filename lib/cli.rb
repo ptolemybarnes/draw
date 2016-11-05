@@ -22,6 +22,7 @@ module Draw
     }
 
     def input(command)
+      fail UnknownCommandError if command.empty?
       return if command.lstrip == Commands::EXIT
       execute(parse(command))
     end
