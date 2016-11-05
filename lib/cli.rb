@@ -7,12 +7,11 @@ module Draw
     class NoProjectError < CLIError; end
 
     module Commands
-      PREFIX           = 'enter command:'
       DRAW_CANVAS      = 'C'
       DRAW_LINE        = 'L'
       DRAW_RECTANGLE   = 'R'
       DRAW_FILL        = 'B'
-      EXIT             =  PREFIX + ' Q'
+      EXIT             =  'Q'
     end
 
     SHAPE_COMMANDS = {
@@ -32,7 +31,6 @@ module Draw
     attr_reader :project
 
     def parse(command)
-      fail NoPrefixError unless command.slice!(Commands::PREFIX)
       tokens = command.lstrip.split.map { |arg| Token.new(arg) }
       fail UnknownCommandError unless tokens.first.shape_command?
       fail NoProjectError unless project ||

@@ -13,47 +13,43 @@ module Draw
     end
 
     specify 'creating a project' do
-      cli.input('enter command: C 20 4')
+      cli.input('C 20 4')
 
       expect(Project).to have_received(:new).with(hash_including(width: 20, height: 4))
     end
 
     specify 'drawing a line on the project' do
-      cli.input('enter command: C 20 4')
-      cli.input('enter command: L 1 2 6 2')
+      cli.input('C 20 4')
+      cli.input('L 1 2 6 2')
 
       expect(project).to have_received(:draw_line)
         .with(from: [0, 1], to: [5, 1])
     end
 
     specify 'creating a fill' do
-      cli.input('enter command: C 20 4')
-      cli.input('enter command: B 10 3 o')
+      cli.input('C 20 4')
+      cli.input('B 10 3 o')
 
       expect(project).to have_received(:fill)
         .with(9, 2, 'o')
     end
 
     specify 'creating a rectangle' do
-      cli.input('enter command: C 20 4')
-      cli.input('enter command: R 16 1 20 3')
+      cli.input('C 20 4')
+      cli.input('R 16 1 20 3')
 
       expect(project).to have_received(:draw_rectangle)
         .with(from: [15, 0], to: [19, 2])
     end
 
     describe 'errors' do
-      it 'commands must be correctly prefixed' do
-        expect { cli.input('badly prefixed command') }.to raise_error(CLI::NoPrefixError)
-      end
-
       it 'first token in a command must be a shape command' do
-        expect { cli.input('enter command: 1 2 3 4') }.to raise_error(CLI::UnknownCommandError)
+        expect { cli.input('1 2 3 4') }.to raise_error(CLI::UnknownCommandError)
       end
 
       it 'first command must be to draw a project' do
         expect do
-          cli.input('enter command: L 1 2 6 2')
+          cli.input('L 1 2 6 2')
         end.to raise_error(CLI::NoProjectError)
       end
     end
