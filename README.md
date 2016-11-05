@@ -8,7 +8,8 @@ $ ruby run.rb
 
 #### Commands
 
-1. Draw a canvas, giving x and y dimensions:
+1) Draw a canvas, giving x and y dimensions:  
+
 ```
 enter command: C 20 4
 
@@ -20,7 +21,8 @@ ______________________
 ----------------------
 ```
 
-2. Draw a line, giving xy coordinates of start and finish
+2) Draw a line, giving xy coordinates of start and finish.  
+
 ```
 enter command: L 1 2 6 2
 
@@ -32,7 +34,8 @@ ______________________
 ----------------------
 ```
 
-3. Draw a rectangle, giving xy coordinates of top-left and bottom-right.
+3) Draw a rectangle, giving xy coordinates of top-left and bottom-right.  
+
 ```
 enter command: R 16 1 20 3
 
@@ -44,7 +47,8 @@ ______________________
 ----------------------
 ```
 
-4. Fill with a given 'colour' from an xy coordinate.
+4) Fill with a given 'colour' from an xy coordinate.  
+
 ```
 enter command: B 10 3 o
 
@@ -56,7 +60,7 @@ ______________________
 ----------------------
 ```
 
-5. Quit.
+5) Quit.
 ```
 enter command: Q
 ```
